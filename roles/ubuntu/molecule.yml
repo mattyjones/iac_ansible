@@ -1,0 +1,34 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+molecule:
+  test:
+    sequence:
+      - destroy
+      - syntax
+      - create
+      - converge
+      - idempotence
+      - verify
+vagrant:
+  platforms:
+    - name: yakkety64
+      box: ubuntu/yakkety64
+      box_url: https://atlas.hashicorp.com/ubuntu/boxes/yakkety64
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 1024
+        cpus: 2
+  instances:
+    - name: ubuntu
+      ansible_groups:
+        - group1
+verifier:
+  name: testinfra
+    options:
+      verbose: true
+      strict: true
